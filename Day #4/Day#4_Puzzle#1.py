@@ -44,12 +44,12 @@ class Board:
 
     # Scores the board (sum of all unmarked numbers multiplied by the called number)
     def score_me(self, number):
-        sum21 = 0
+        sum41 = 0
         for i in range(0, 5):
             for j in range(0, 5):
                 if self.hit_matrix[i][j] == 0:
-                    sum21 += self.board_matrix[i][j]
-        return sum21 * number
+                    sum41 += self.board_matrix[i][j]
+        return sum41 * number
 
 
 # Set of all boards
