@@ -1,6 +1,6 @@
 # Advent of Code 2021
 # The first puzzle of the sixth day
-# ~~~~~ The Exponential Fish ~~~~~~
+# ~~~~~ Fish a la Exponential ~~~~~~
 # Predict the size of lanternfish population over and through the deep days
 
 # Fish population -> each entry represents a fish -> value represents fish's number of remaining days until procreating a new fish

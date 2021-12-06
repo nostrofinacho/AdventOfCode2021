@@ -2,7 +2,7 @@ from collections import Counter
 
 # Advent of Code 2021
 # The second puzzle of the sixth day
-# ~~~~~ The Exponential Fish ~~~~~~
+# ~~~~~ Fish a la Exponential ~~~~~~
 # Will the lanternfish achieve ocean supremacy?
 # This time the fish are too exponential for the naive approach
 
