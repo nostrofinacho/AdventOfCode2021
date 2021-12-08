@@ -23,7 +23,6 @@ def all_the_same(a, b):
 
 # Decodes the output via given input
 def decode(input, output):
-    used_up = [False, True, False, False, True, False, False, True, True, False]
     used_up = [True, True, True, False, False, False, False, False, False, True]
     mapping = {1: input[0], 4: input[2], 7: input[1], 8: input[9]}
 
