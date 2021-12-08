@@ -27,6 +27,7 @@ def decode(input, output):
     used_up = [True, True, True, False, False, False, False, False, False, True]
     mapping = {1: input[0], 4: input[2], 7: input[1], 8: input[9]}
 
+    # Process of elimination
     for i in range(3, 6):
         if contained(input[i], mapping[1]):
             mapping[3] = input[i]
