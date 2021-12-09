@@ -35,6 +35,7 @@ for i in range(len(height_map)):
     if -1 in basin_dictionary.values():
         break
 
+# Task solution
 print("There are", ret-1, "basins.")
 print("The product of sizes of the three largests basins:", prod(np.asarray(basin_dictionary.most_common(3))[:,1]))
 
