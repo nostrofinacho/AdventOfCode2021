@@ -41,9 +41,16 @@ print("The product of sizes of the three largests basins:", prod(np.asarray(basi
 
 # Display
 heat_map_3c = np.zeros([len(height_map), len(height_map[0]), 3])
-heat_map_3c[:,:,2] = heat_map
+heat_map_3c[:,:,1] = heat_map
 
-# The red light indicates it ain't secure
+# Add red coloring of the largest basins
+largest_labels = np.asarray(basin_dictionary.most_common(3))[:, 0]
+for i in range(len(height_map)):
+    for j in range(len(height_map[0])):
+        if basin_labels[i][j] in largest_labels:
+            heat_map_3c[i, j, 2] = 255
+
+# The green light indicates the point is secure
 cv2.namedWindow("The Cave's basins -> Red = Dangerous", cv2.WINDOW_NORMAL)
 cv2.imshow("The Cave's basins -> Red = Dangerous", heat_map_3c)
 cv2.waitKey()
