@@ -43,6 +43,7 @@ print("The product of sizes of the three largests basins:", prod(np.asarray(basi
 heat_map_3c = np.zeros([len(height_map), len(height_map[0]), 3])
 heat_map_3c[:,:,2] = heat_map
 
+# The red light indicates it ain't secure
 cv2.namedWindow("The Cave's basins -> Red = Dangerous", cv2.WINDOW_NORMAL)
 cv2.imshow("The Cave's basins -> Red = Dangerous", heat_map_3c)
 cv2.waitKey()
