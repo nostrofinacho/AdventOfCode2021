@@ -23,14 +23,14 @@ binary_map = heat_map.astype(int)
 binary_map_inverted = np.where(binary_map == 0, 1, 0).astype(np.uint8)
 
 # Finding and labeling the basins
-ret, basin_labeles = cv2.connectedComponents(binary_map_inverted, connectivity=4)
-basin_dictionary = Counter(list(basin_labeles.flatten()))
+ret, basin_labels = cv2.connectedComponents(binary_map_inverted, connectivity=4)
+basin_dictionary = Counter(list(basin_labels.flatten()))
 
 # Eliminate the height9 antibasin
 for i in range(len(height_map)):
     for j in range(len(height_map[0])):
         if height_map[i][j] == 9:
-            basin_dictionary[basin_labeles[i][j]] = -1
+            basin_dictionary[basin_labels[i][j]] = -1
             break
     if -1 in basin_dictionary.values():
         break
