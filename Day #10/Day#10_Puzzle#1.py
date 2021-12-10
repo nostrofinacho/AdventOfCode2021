@@ -12,7 +12,7 @@ scores = {')':3, ']':57, '}':1197, '>':25137}
 
 # Scores a line -> 0 if line valid or incomplete -> returns greater than 0 if illegal line
 def score_me(line):
-    global legal_chunks
+    global legal_chunks, scores
     stack = deque()
     for char in line:
         # If an opener is read
