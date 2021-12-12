@@ -21,6 +21,7 @@ def get_path(n):
 
 # Searches for all the next possible areas, given a path
 def search_around_path(path):
+    # The mapping is bilateral, hence the two next-area lists
     a = [rule[1] for rule in bag_end if rule[0] == path.split(',')[-1]]
     b = [rule[0] for rule in bag_end if rule[1] == path.split(',')[-1]]
     return a + b
