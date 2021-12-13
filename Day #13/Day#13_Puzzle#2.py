@@ -50,8 +50,9 @@ def fold(paper, axis, z):
             d += 1
 
         # Paper is now of lesser area (the physical folding/cutting off)
+        f = len(paper[0])
         for row in range(len(paper)):
-            for _ in range(len(paper[0])-z):
+            for _ in range(f-z):
                 del paper[row][-1]
     return paper
 

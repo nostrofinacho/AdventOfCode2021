@@ -26,24 +26,33 @@ def fold(paper, axis, z):
     # Vertical fold |---|
     if axis == 'y':
         # The fold
-        for row in range(z):
+        # Start at the crease and move outwards
+        d = 1   # Distance from the crease
+        while z - d >= 0 and z + d < len(paper):
             for col in range(len(paper[0])):
-                paper[row][col] += paper[-row-1][col]
-                paper[row][col] = min(paper[row][col], 1)
-        # Paper is now of lesser area
-        for row in range(z+1):
+                paper[z-d][col] += paper[z+d][col]
+                paper[z-d][col] = min(paper[z-d][col], 1)
+            d += 1
+
+        # Paper is now of lesser area (the physical folding/cutting off)
+        for _ in range(len(paper)-z):
             del paper[-1]
 
     # Horizontal fold | | |
     elif axis == 'x':
         # The fold
+        # Start at the crease and move outwards
+        d = 1   # Distance from the crease
+        while z - d >= 0 and z + d < len(paper[0]):
+            for row in range(len(paper)):
+                paper[row][z-d] = int(paper[row][z-d]) + int(paper[row][z+d])
+                paper[row][z-d] = min(paper[row][z-d], 1)
+            d += 1
+
+        # Paper is now of lesser area (the physical folding/cutting off)
+        f = len(paper[0])
         for row in range(len(paper)):
-            for col in range(z):
-                paper[row][col] += paper[row][-col-1]
-                paper[row][col] = min(paper[row][col], 1)
-        # Paper is now of lesser area
-        for row in range(len(paper)):
-            for col in range(z+1):
+            for _ in range(f-z):
                 del paper[row][-1]
     return paper
 
@@ -53,7 +62,7 @@ paper = [[]]
 dots = []   # Dot coordinates
 
 # Input parsing
-with open("Day#13_Puzzle#1_Input.txt") as input_file:
+with open("Day#13_Puzzle#2_Input.txt") as input_file:
     line = input_file.readline()
 
     # Remember the dots
@@ -74,8 +83,8 @@ with open("Day#13_Puzzle#1_Input.txt") as input_file:
         fold_counter += 1
         axis, coordinate = line.strip().split(' ')[-1].split('=')
         paper = fold(paper, axis, int(coordinate))
-        print(string_me(paper))
-        print(dotcount(paper), "dots are visible after the " + str(fold_counter) +". fold.")
+        #print(string_me(paper))
+        print(dotcount(paper), "dots are visible after the " + str(fold_counter) + ". fold.")
         print("-"*38, "\n")
         if fold_counter == 1:
             break
