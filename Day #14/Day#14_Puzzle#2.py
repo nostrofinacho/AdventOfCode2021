@@ -20,8 +20,8 @@ for cycle in range(40):
     new_count = Counter()
     for pair in pairs_count.keys():
         child = pair_rules[pair]
-        new_count[pair[0]+child] += pairs_count[pair]
-        new_count[child+pair[1]] += pairs_count[pair]
+        new_count[pair[0]+child] += pairs_count[pair]   # The new left-side pair
+        new_count[child+pair[1]] += pairs_count[pair]   # The new right-side pair
     pairs_count = new_count
 
 # Count the elements (only the left accomplice)
