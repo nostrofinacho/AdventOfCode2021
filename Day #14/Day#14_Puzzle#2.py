@@ -36,3 +36,7 @@ elements_count[polymer_template[-1]] += 1
 elements_count = elements_count.most_common()
 dif = elements_count[0][1] - elements_count[-1][1]
 print("Quantity of the least common element subtracted from the quantity of the most common element:", dif)
+
+##################
+# IMPORTANT NOTE #
+# This solution DOES NOT allow for polymer reconstruction, rendering it useless except for the element-counting task
