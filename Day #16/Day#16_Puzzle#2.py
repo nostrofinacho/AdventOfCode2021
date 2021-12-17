@@ -129,55 +129,8 @@ def hierarchy_evaluation(root):
     return stere_me_pere[ID](children)
 
 
-###################################################################################
-# Testing and running
-
-
-# Test literal value packet (v:6, ID:4, Value:2021, Total length:24)
-p = parse_packet(to_bin_str("D2FE28"))
-print("Version:", to_dec(p.V), " TypeID:", to_dec(p.T), " Value:", to_dec(p.value), " Total length:", p.total_length)
-print()
-
-
-# Test operator packet (v:1, ID:6, I:0, L:27, SP1:Value=10, SP2: Value=20)
-p = parse_packet(to_bin_str("38006F45291200"))
-print("Version:", to_dec(p.V), " TypeID:", to_dec(p.T), " I:", p.I, " L:", to_dec(p.L))
-print("Children:", len(p.children))
-print("Children values:", end=' ')
-for child in p.children:
-    print(to_dec(child.value), end=' ')
-print()
-print()
-
-# Test operator packet (v:7, ID:3, I:1, L:3, SP1:Value=1, SP2: Value=2, SP3: Value=3)
-p = parse_packet(to_bin_str("EE00D40C823060"))
-print("Version:", to_dec(p.V), " TypeID:", to_dec(p.T), " I:", p.I, " L:", to_dec(p.L))
-print("Children:", len(p.children))
-print("Children values:", end=' ')
-for child in p.children:
-    print(to_dec(child.value), end=' ')
-print()
-print()
-
-print()
-print("This should be 16:", end=' ')
-print(sum_the_vs(parse_packet(to_bin_str("8A004A801A8002F478"))))
-
-print()
-print("This should be 12:", end=' ')
-p = parse_packet(to_bin_str("620080001611562C8802118E34"))
-print(sum_the_vs(p))
-
-print()
-print("This should be 23:", end=' ')
-print(sum_the_vs(parse_packet(to_bin_str("C0015000016115A2E0802F182340"))))
-
-print()
-print("This should be 31:", end=' ')
-print(sum_the_vs(parse_packet(to_bin_str("A0016C880162017C3686B18A3D4780"))))
-print()
-
-# Run the input
+########################################################################################
+# Input parsing & running
 with open("Day#16_Puzzle#1_Input.txt") as f:
     transmission = f.read().strip()
     root_packet = parse_packet(to_bin_str(transmission))
