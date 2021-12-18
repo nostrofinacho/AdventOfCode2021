@@ -50,7 +50,7 @@ class Pair:
             stringer += self.right_child.string_me() + ']'
         return stringer
 
-    # Returns None if there ain't no
+    # Returns the first regular pair to the left (according to string notation)
     def first_left(self):
         if self.iam == 'right':
             temp = self.parent.left_child
@@ -67,6 +67,7 @@ class Pair:
             temp = temp.right_child
         return temp.right_child
 
+    # Returns the first regular pair to the right (according to string notation)
     def first_right(self):
         if self.iam == 'right':
             temp = self.parent
@@ -83,6 +84,7 @@ class Pair:
             temp = temp.left_child
         return temp.left_child
 
+    # Explodes the pair
     def explode_me(self):
         first_left_regular = self.first_left()
         if first_left_regular:
@@ -95,6 +97,7 @@ class Pair:
         del self.left_child
         del self.right_child
 
+    # Returns the left-most pair (according to string notation) eligible for explosion
     def find_explosion(self):
         if self.get_root().explosion_found:
             return
@@ -108,18 +111,20 @@ class Pair:
         if not self.regular:
             self.right_child.find_explosion()
 
+    # Returns the root pair
     def get_root(self):
         temp = self
         while temp.nesting != 0:
             temp = temp.parent
         return temp
-    from math import floor, ceil
 
+    # Splits the godpair
     def split_me(self):
         self.regular = False
         self.left_child = Pair(str(math.floor(self.value/2)), self.nesting, self, 'left')
         self.right_child = Pair(str(math.ceil(self.value/2)), self.nesting, self, 'right')
 
+    # Finds the left-most (according to string notation) pair eligible for splitting
     def find_split(self):
         if self.get_root().split_found:
             return
@@ -131,6 +136,7 @@ class Pair:
         if not self.regular:
             self.right_child.find_split()
 
+    # Calculates the total sum magnitude under the pair
     def magnitude(self):
         sum41 = 0
         if self.regular:
