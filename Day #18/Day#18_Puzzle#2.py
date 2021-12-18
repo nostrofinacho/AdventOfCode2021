@@ -50,7 +50,7 @@ class Pair:
             stringer += self.right_child.string_me() + ']'
         return stringer
 
-    # Returns the first regular pair to the left (according to string notation)
+    # Returns the first regular pair to the left of the referenced one (according to string notation)
     def first_left(self):
         if self.iam == 'right':
             temp = self.parent.left_child
@@ -67,7 +67,7 @@ class Pair:
             temp = temp.right_child
         return temp.right_child
 
-    # Returns the first regular pair to the right (according to string notation)
+    # Returns the first regular pair to the right of the referenced one (according to string notation)
     def first_right(self):
         if self.iam == 'right':
             temp = self.parent
