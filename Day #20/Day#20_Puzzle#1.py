@@ -33,7 +33,6 @@ def show_image(ligths, target, nontarget):
         for x in range(-border + min_pixel[0], max_pixel[0]+1+border):
             line += target if (x, y) in ligths else nontarget
         print(line)
-    print("aaa", target)
     return
 
 
