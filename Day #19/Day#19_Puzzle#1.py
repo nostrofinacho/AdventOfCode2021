@@ -11,6 +11,7 @@ for x in (1, -1):
             tracer.append((x, y, z, 0, 2, 1))
             tracer.append((x, y, z, 2, 1, 0))
             tracer.append((x, y, z, 1, 0, 2))
+tracer = list(reversed(tracer))
 
 
 def switch_up(scanner):
@@ -21,16 +22,9 @@ def switch_up(scanner):
             buffer.append([trace[0] * beacon[trace[3]], trace[1] * beacon[trace[4]], trace[2] * beacon[trace[5]]])
         little_mix.append(buffer)
     return zip(*little_mix)
-    mix = []
-    for trace in tracer:
-        buffer = []
-        for beacon in scanner:
-            buffer.append([trace[0] * beacon[trace[3]], trace[1] * beacon[trace[4]], trace[2] * beacon[trace[5]]])
-        mix.append(buffer)
-    return mix
 
 
-def match(s1, s1_loc, s2):
+def match(s1, s2):
     cnt_V = -1
     for variation in switch_up(s2):
         cnt_V += 1
@@ -41,8 +35,6 @@ def match(s1, s1_loc, s2):
                 for b2 in variation:
                     for b1 in s1:
                         if dif[0] == b2[0]-b1[0] and dif[1] == b2[1]-b1[1] and dif[2] == b2[2]-b1[2]:
-                            #pair = (b1, b2)
-                            #pair = ([-618,-824,-621], [686,422,578])
                             cnt += 1
                 if cnt >= 12:
                     return dif, cnt_V
@@ -50,7 +42,7 @@ def match(s1, s1_loc, s2):
 
 
 # Input parsing
-with open("Day#19_Puzzle#1_Input_Example.txt") as input_data:
+with open("Day#19_Puzzle#1_Input.txt") as input_data:
     # Each entry is a scanner represented by a detected beacons list
     scanners = []
 
@@ -64,59 +56,36 @@ with open("Day#19_Puzzle#1_Input_Example.txt") as input_data:
             continue
         buffer.append(list(map(int, line.split(','))))
 
-    # Testing area
-    dif = match(scanners[0], [0,0,0], scanners[1])
-    value = dif[0]
-    print(dif[0], tracer[dif[1]])
-    trace = tracer[dif[1]]
-    print("....")
 
-    for b in scanners[1]:
-        print(-dif[0][0]+ b[0] * trace[0], -dif[0][1]+b[1] * trace[1], -dif[0][2]+b[2]* trace[2])
-
-    #######################################################
-    while True:
-        a = 5
+    # Main section - matching loop
     scanners_positions = [[0, 0, 0] for _ in range(len(scanners))]
     scanners_done = [False for _ in range(len(scanners))]
     scanners_done[0] = True
 
-    # Matching loop
     while not all(scanners_done):
         # Outer loop -> done scanner
         for i in range(len(scanners)):
             if not scanners_done[i]:
                 continue
-
             # Inner loop -> not yet done scanner
             for j in range(len(scanners)):
                 if scanners_done[j]:
                     continue
-
                 # Mix and match
                 dif = match(scanners[i], scanners[j])
                 if dif:
                     value, trace = dif[0], tracer[dif[1]]
-                    temp = [trace[0] * value[trace[3]], trace[1] * value[trace[4]], trace[2] * value[trace[5]]]
-                    scanners_positions[j] = [scanners_positions[i][k] - temp[k] for k in (0, 1, 2)]
+
+                    # Align the newfound scanner -> set the beacons to done scanner's POV
+                    for w in range(len(scanners[j])):
+                        beacon = scanners[j][w]
+                        scanners[j][w] = [(beacon[trace[q+3]] * trace[q]) - value[q] for q in (0, 1, 2)]
 
                     scanners_done[j] = True
 
-    beacons = set()
-    for i in range(len(scanners)):
-        offset = scanners_positions[i]
-        for beacon in scanners[i]:
-            beacons.add(tuple([beacon[0] - offset[0], beacon[1] - offset[1], beacon[2] - offset[2]]))
-    print(len(beacons))
-
-
-# Returns centralised version of the beacon list
-def decentralise(beacs):
-    xc, yc, zc = 0, 0, 0
-    for beac in beacs:
-        xc, yc, zc = xc+beac[0], yc+beac[1], zc+beac[2]
-    l = len(beacs)
-    xc, yc, zc = xc/l, yc/l, zc/l
-
-    # Centralised version
-    return [list(map(int, [beac[0]-xc, beac[1]-yc, beac[2]-zc])) for beac in beacs]
+    # Task solution - counting the beacons
+    bunch = set()
+    for scanner in scanners:
+        for beacon in scanner:
+            bunch.add(tuple(beacon))
+    print("In total, there are", len(bunch), beacons)
