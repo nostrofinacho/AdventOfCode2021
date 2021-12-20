@@ -3,12 +3,15 @@
 
 
 # Uses the given enhancing algorithm (and current lights) to calculate the output value of given pixel
-def parse_a_pixel(ligths, pixel, enhancer):
+def parse_a_pixel(ligths, pixel, enhancer, target):
     x, y = pixel[0], pixel[1]
     stringer = ''
     for j in (y-1, y, y+1):
         for i in (x-1, x, x + 1):
-            stringer += '1' if (i, j) in ligths else '0'
+            if target == '#':
+                stringer += '1' if (i, j) in ligths else '0'
+            else:
+                stringer += '1' if (i, j) not in ligths else '0'
     return enhancer[int(stringer, 2)]
 
 
@@ -30,6 +33,7 @@ def show_image(ligths, target, nontarget):
         for x in range(-border + min_pixel[0], max_pixel[0]+1+border):
             line += target if (x, y) in ligths else nontarget
         print(line)
+    print("aaa", target)
     return
 
 
@@ -50,19 +54,20 @@ with open("Day#20_Puzzle#1_Input.txt") as input_data:
     show_image(trench_lights, '#', '.')
     print("\n" + str(len(trench_lights)) + " pixels are lit.\n")
 
+
     # CSI Enhance
     for enhance_level in range(1, 3):
         target = "#."[enhance_level % 2]
         nontarget = ".#"[enhance_level % 2]
 
         new_trench_ligths = set()
-        border = 10  # Size of area to be checked outside of the lit area
+        border = 1  # Size of area to be checked outside of the lit area
 
         # Image enhancement
         min_pixel, max_pixel = get_borders(trench_lights)
         for y in range(-border + min_pixel[1], max_pixel[1] + 1 + border):
             for x in range(-border + min_pixel[0], max_pixel[0] + 1 + border):
-                if parse_a_pixel(trench_lights, (x, y), enhance_algorithm) == target:
+                if parse_a_pixel(trench_lights, (x, y), enhance_algorithm, nontarget) == target:
                     new_trench_ligths.add((x, y))
 
         # Printing the new image
