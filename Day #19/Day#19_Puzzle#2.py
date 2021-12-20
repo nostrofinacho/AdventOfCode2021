@@ -43,7 +43,7 @@ def match(s1, s2):
 
 
 # Input parsing
-with open("Day#19_Puzzle#1_Input.txt") as input_data:
+with open("Day#19_Puzzle#2_Input.txt") as input_data:
     # Each entry is a scanner represented by a detected beacons list
     scanners = []
 
@@ -59,7 +59,7 @@ with open("Day#19_Puzzle#1_Input.txt") as input_data:
 
 
     # Main section - matching loop
-    scanners_positions = [[0, 0, 0] for _ in range(len(scanners))]
+    scanners_positions = [(0, 0, 0) for _ in range(len(scanners))]
     scanners_done = [False for _ in range(len(scanners))]
     scanners_done[0] = True
 
@@ -78,6 +78,7 @@ with open("Day#19_Puzzle#1_Input.txt") as input_data:
                 dif = match(scanners[i], scanners[j])
                 if dif:
                     value, trace = dif[0], tracer[dif[1]]
+                    scanners_positions[j] = tuple([-value[w] for w in (0, 1, 2)])
 
                     # Align the newfound scanner -> set the beacons to done scanner's POV
                     for w in range(len(scanners[j])):
@@ -95,3 +96,11 @@ with open("Day#19_Puzzle#1_Input.txt") as input_data:
         for beacon in scanner:
             bunch.add(tuple(beacon))
     print("In total, there are", len(bunch), "beacons.")
+
+    # Task #2 solution - largest manhattan pair distance
+    max_distance = 0
+    for location_a in scanners_positions:
+        for location_b in scanners_positions:
+            distance = sum([abs(location_b[q] - location_a[q]) for q in (0, 1, 2)])
+            max_distance = max(max_distance, distance)
+    print("The largest Manhattan distance between any two scanners: " + str(max_distance) + ".")
