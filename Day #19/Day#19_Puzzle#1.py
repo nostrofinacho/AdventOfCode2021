@@ -42,7 +42,7 @@ def match(s1, s2):
 
 
 # Input parsing
-with open("Day#19_Puzzle#1_Input.txt") as input_data:
+with open("Day#19_Puzzle#1_Input_Example.txt") as input_data:
     # Each entry is a scanner represented by a detected beacons list
     scanners = []
 
@@ -88,4 +88,4 @@ with open("Day#19_Puzzle#1_Input.txt") as input_data:
     for scanner in scanners:
         for beacon in scanner:
             bunch.add(tuple(beacon))
-    print("In total, there are", len(bunch), beacons)
+    print("In total, there are", len(bunch), "beacons.")
