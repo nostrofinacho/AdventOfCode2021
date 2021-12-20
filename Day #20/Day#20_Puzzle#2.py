@@ -37,7 +37,7 @@ def show_image(ligths, target, nontarget):
 
 
 # Input parsing
-with open("Day#20_Puzzle#1_Input.txt") as input_data:
+with open("Day#20_Puzzle#2_Input.txt") as input_data:
     enhance_algorithm = input_data.readline().strip()
     input_data.readline()
 
@@ -49,13 +49,13 @@ with open("Day#20_Puzzle#1_Input.txt") as input_data:
             if char == '#':
                 trench_lights.add((x, y))
 
-    print("Input image:")
-    show_image(trench_lights, '#', '.')
-    print("\n" + str(len(trench_lights)) + " pixels are lit.\n")
+    #print("Input image:")
+    #show_image(trench_lights, '#', '.')
+    print("\nIn the starting image, " + str(len(trench_lights)) + " pixels are lit.\nProcessing the image.....")
 
 
     # CSI Enhance
-    for enhance_level in range(1, 3):
+    for enhance_level in range(1, 50+1):
         target = "#."[enhance_level % 2]
         nontarget = ".#"[enhance_level % 2]
 
@@ -69,10 +69,12 @@ with open("Day#20_Puzzle#1_Input.txt") as input_data:
                 if parse_a_pixel(trench_lights, (x, y), enhance_algorithm, nontarget) == target:
                     new_trench_ligths.add((x, y))
 
+        '''
         # Printing the new image
         print("\n\nEnhancement level " + str(enhance_level) + ":")
         show_image(new_trench_ligths, target, nontarget)
         print("\n" + str(len(new_trench_ligths)) + " pixels are lit.\n")
+        '''
 
         # Take up the new generation
         trench_lights = new_trench_ligths
