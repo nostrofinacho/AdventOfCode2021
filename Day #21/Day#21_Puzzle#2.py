@@ -48,3 +48,4 @@ def split_the_verse(positions, scores, on_turn):
 game = split_the_verse(player_positions, (0, 0), 0)
 print("Wins\n-----\nPlayer 1:", game[0], "\nPlayer 2:", game[1])
 print("-----\nTask solution:", max(game))
+print("Multiverse size:", '{:.2e}'.format(sum(game)))
