@@ -4,6 +4,7 @@ import sys
 from functools import cache
 sys.setrecursionlimit(100000)
 
+
 # A single gamestate
 @cache
 class GameState:
@@ -19,18 +20,19 @@ class GameState:
 
     @cache
     def play(self, player, rester):
-        # Check the scores
+        # Check the scores for win condition
         for player in self.players:
             if self.scores[player] >= 21:
                 self.wins[player] += 1
                 return
 
-        # Who's turn
+        # Multiverse
         for first_roll in (1, 2, 3):
             for second_roll in (1, 2, 3):
                 for third_roll in (1, 2, 3):
                     next_gamestate = GameState(self.players)
                     turn_score = sum((first_roll, second_roll, third_roll))
+
                     next_gamestate.positions[player] = (self.positions[player] + turn_score - 1) % 10 + 1
                     next_gamestate.scores[player] = self.scores[player] + next_gamestate.positions[player]
 
@@ -38,7 +40,6 @@ class GameState:
                     next_gamestate.scores[rester] = self.positions[rester]
 
                     next_gamestate.play(rester, player)
-        return
 
 
 # Input parsing
