@@ -67,7 +67,6 @@ class Game:
 # Input parsing
 with open("Day#21_Puzzle#1_Input.txt") as input_data:
     player1_position, player2_position = list(map(int, input_data.read().replace("\n", " ")[:-1].split(" ")[4:10:5]))
-    player1_score, player2_score = 0, 0
 
 # Prepare the game
 game = Game(['Santa Claus', 'Mrs. Claus'], 10, DeterministicDice())
