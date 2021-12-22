@@ -4,15 +4,9 @@
 
 # Turns cuboid on or off -> a cube coordinates being in the core dictionary means the cube is on (limited to -50 <= coordinate <= 50)
 def switch_cuboid(core, comp, switch):
-    for x in range(comp[0][0], comp[0][1] + 1):
-        if not -50 <= x <= 50:
-            continue
-        for y in range(comp[1][0], comp[1][1] + 1):
-            if not -50 <= y <= 50:
-                continue
-            for z in range(comp[2][0], comp[2][1] + 1):
-                if not -50 <= z <= 50:
-                    continue
+    for x in range(max(comp[0][0], -50), min(50, comp[0][1]) + 1):
+        for y in range(max(comp[1][0], -50), min(50, comp[1][1]) + 1):
+            for z in range(max(comp[2][0], -50), min(50, comp[2][1]) + 1):
                 if switch == 'on':
                     core.add((x, y, z))
                 else:
