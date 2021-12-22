@@ -14,10 +14,10 @@ def switch_cuboid(core, comp, switch):
                 if not -50 <= z <= 50:
                     continue
                 if switch == 'on':
-                    core[x, y, z] = 1
+                    core.add((x, y, z))
                 else:
-                    if (x, y, z) in core.keys():
-                        del core[x, y, z]
+                    if (x, y, z) in core:
+                        core.remove((x, y, z))
 
 
 # Input parsing
@@ -28,7 +28,7 @@ with open("Day#22_Puzzle#1_Input.txt") as input_data:
 
 
 # Contains coordinates of the cubes that are turned on
-reactor_core = dict()
+reactor_core = set()
 for i in range(len(switches)):
     switch_cuboid(reactor_core, input_lines[i], switches[i])
 
